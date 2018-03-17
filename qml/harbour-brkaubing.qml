@@ -30,7 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 import "pages"
 
 import harbour.brkaubing 1.0
@@ -42,11 +42,20 @@ ApplicationWindow{
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
 
+    property string firstName: "";
+    property int hid: 0;
+    property string hash: "";
+    property bool loggedIn: false;
+    property int dienstID: 0;
+
     Notification {
         id: updateNote
-        category: "x-nemo.example"
         summary: "Datei wurde aktualisiert"
         body: "Eine neue Ausbildungsdatei wurde eben heruntergeladen. Neue Termine sind verfügbar."
+        previewSummary: "Datei wurde aktualisiert"
+        previewBody: "Eine neue Ausbildungsdatei wurde eben heruntergeladen. Neue Termine sind verfügbar."
+
+        onClicked: pageStack.push(Qt.resolvedUrl("PlanPage.qml"))
     }
 
     XmlFileHandler {
@@ -63,9 +72,9 @@ ApplicationWindow{
 
         onNextEventsArrayChanged: {
             if(fileStat > 0){
-//                for (var i = 0; i < nextEventsArray.length; i++){
-//                    console.log(i+": "+nextEventsArray[i])
-//                }
+/*                for (var i = 0; i < nextEventsArray.length; i++){
+                    console.log(i+": "+nextEventsArray[i])
+                }*/
                 if(showInternalDates)
                     offset = nextEventsArray[24]
 
@@ -106,5 +115,18 @@ Thema: "+handler.nextEventsArray[handler.offset+2]
                 ehItem = "am: "+firstAidHandler.nextEventsArray[8].substring(0,8)+" und "+Qt.formatDateTime(new Date((firstAidHandler.nextEventsArray[10]+"000")*1),"dd.MM.yyyy")+"\n"+firstAidHandler.nextEventsArray[11]
             }
         }
+    }
+
+    ListModel {
+        id: persList
+    }
+    ListModel {
+        id: helferList
+    }
+    ListModel {
+        id: contactsList
+    }
+    ListModel {
+        id: hidList
     }
 }

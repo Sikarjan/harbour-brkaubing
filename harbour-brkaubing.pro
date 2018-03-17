@@ -45,13 +45,17 @@ HEADERS += \
 
 DISTFILES += \
     qml/pages/AboutPage.qml \
+    qml/pages/DienstPage.qml \
     qml/pages/PlanPage.qml \
     images/HvoLogo.png \
     qml/pages/SettingPage.qml \
     qml/pages/FirstAidPage.qml \
     qml/pages/AboutCoursePage.qml \
     qml/js/storage.js \
-    qml/js/globals.js
+    qml/js/globals.js \
+    qml/js/parser.js \
+    qml/js/sha512.js \
+    qml/pages/ContactsPage.qml
 
 RESOURCES += \
     res.qrc

@@ -3,6 +3,9 @@
 XmlFileHandler::XmlFileHandler(QObject *parent) : QObject(parent){
     fileLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
+    QSslConfiguration sslConfiguration(QSslConfiguration::defaultConfiguration());
+    sslConfiguration.setProtocol(QSsl::TlsV1_2);
+
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     headManager = new QNetworkAccessManager(this);
@@ -62,7 +65,7 @@ void XmlFileHandler::replyFinished(QNetworkReply *reply){
         if(file->open(QIODevice::ReadWrite | QIODevice::Truncate)){
             QTextStream out(file);
             out << reply->readAll();
-            qDebug() << out.status();
+//            qDebug() << out.status();
             file->flush();
             newFileStat = 3; // File was updated
         }else{
@@ -76,7 +79,7 @@ void XmlFileHandler::replyFinished(QNetworkReply *reply){
 }
 
 void XmlFileHandler::catchFileStatChange(int stat){
-    qDebug() << stat;
+//    qDebug() << stat;
 }
 
 QString XmlFileHandler::filePath(){

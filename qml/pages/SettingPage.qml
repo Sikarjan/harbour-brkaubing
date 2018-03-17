@@ -6,17 +6,18 @@ import "../js/storage.js" as Storage
 Dialog {
     id: page
 
-    onAccepted: {
-        handler.offset = internalDatesSwitch.checked ? handler.nextEventsArray[24]:0
+    Component.onCompleted: {
+        Storage.initialize();
+        saveLogin.checked = Storage.getSetting("saveLogin")
+    }
 
+    onAccepted: {
         firstAidHandler.show = firstAidCalendar.checked
-        handler.showInternalDates = internalDatesSwitch.checked
         handler.showHvoDates = hvoDatesSwitch.checked
 
-        Storage.initialize();
         Storage.setSetting("showFirstAid", firstAidCalendar.checked)
-        Storage.setSetting("internalDates", internalDatesSwitch.checked)
         Storage.setSetting("hvoDates", hvoDatesSwitch.checked)
+        Storage.setSetting("saveLogin", saveLogin.checked)
     }
 
     SilicaFlickable {
@@ -63,17 +64,23 @@ Dialog {
             }
 
             TextSwitch {
-                id: internalDatesSwitch
-                text: "Zeige interne BAs"
-                description: "Für BRK Aubing Mitglieder"
-                checked: handler.showInternalDates
-            }
-
-            TextSwitch {
                 id: hvoDatesSwitch
                 text: "Zeige HvO Termine"
                 description: "HvO Supervisionstermine"
                 checked: handler.showHvoDates
+            }
+
+            Text {
+                font.pixelSize: Theme.fontSizeSmall
+                width: column.width
+                color: Theme.highlightColor
+                text: "Account Einstellungen"
+            }
+
+            TextSwitch {
+                id: saveLogin
+                text: "Speicher Logindaten"
+                description: "Benutzername und Passwort werden auf dem Gerät gespeichert"
             }
         }
     }
