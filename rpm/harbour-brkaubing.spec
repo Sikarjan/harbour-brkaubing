@@ -13,11 +13,11 @@ Name:       harbour-brkaubing
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    BRK Aubing App
-Version:    0.9.2
+Version:    1.0.0
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
-URL:        http://example.org/
+License:    GNU General Public License v3.0
+URL:        https://brk-aubing.de
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-brkaubing.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -29,7 +29,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+App to access BRK Aubing schedules.
 
 
 %prep

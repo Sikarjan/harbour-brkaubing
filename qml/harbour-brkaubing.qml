@@ -47,6 +47,7 @@ ApplicationWindow{
     property string hash: "";
     property bool loggedIn: false;
     property int dienstID: 0;
+    property int typeID: 0;
 
     Notification {
         id: updateNote

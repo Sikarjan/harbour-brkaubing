@@ -28,14 +28,14 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-    import QtQuick 2.0
-    import Sailfish.Silica 1.0
-    import QtQuick.LocalStorage 2.0
-    import "../js/storage.js" as Storage
-    import "../js/globals.js" as Vars
-    import "../js/parser.js" as Parser
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import QtQuick.LocalStorage 2.0
+import "../js/storage.js" as Storage
+import "../js/globals.js" as Vars
+import "../js/parser.js" as Parser
 
-    Page {
+Page {
     id: page
 
     property string response
@@ -278,26 +278,11 @@
                 spacing: Theme.paddingMedium
                 visible: loggedIn || persLoader.running || persErrorText.text !== ""
 
-                Rectangle {
-                    visible: persView.visible
-                    height: 2
-                    width: parent.width
-                    color:Theme.highlightColor
-                }
-
-                Label {
-                    id: persHead
-                    visible: persView.visible
-                    color: Theme.highlightColor
-                    font.pixelSize: Theme.fontSizeLarge
-                    text: "Deine nächsten Termine:"
-                }
-
                 SilicaListView {
                     id: persView
                     visible: persList.count > 0
                     width: parent.width
-                    height: Theme.itemSizeMedium * persList.count
+                    height: Theme.itemSizeMedium * (persList.count + 2)
 
                     model: persList
 
@@ -326,7 +311,27 @@
 
                         onClicked: {
                             dienstID = refId
+                            typeID = typeId
                             pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                        }
+                    }
+
+                    section.property: "sort"
+                    section.criteria: ViewSection.FullString
+                    section.delegate: ListItem {
+                        height: Theme.itemSizeMedium - Theme.paddingMedium
+
+                        Rectangle {
+                            height: 2
+                            width: content.width
+                            color:Theme.highlightColor
+                        }
+
+                        Label {
+                            y: Theme.paddingMedium
+                            color: Theme.highlightColor
+                            font.pixelSize: Theme.fontSizeLarge
+                            text: section == "offen" ? "Offene San Dienste":"Deine nächsten Termine"
                         }
                     }
                 }

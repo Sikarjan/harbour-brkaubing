@@ -22,7 +22,7 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 width: column.width
                 color: Theme.highlightColor
-                text: "Version 0.9.2\nKontakt: Admin@brk-aubing.de"
+                text: "Version 1.0.0\nKontakt: Admin@brk-aubing.de"
             }
 
             Text {

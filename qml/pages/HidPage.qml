@@ -38,7 +38,7 @@ Page {
         id: canvas
         anchors.fill: parent
 
-        contentHeight: content.height
+        contentHeight: hidList.count === 0 ? parent.height:content.height
         VerticalScrollDecorator { flickable: canvas }
 
         SilicaListView {
@@ -99,8 +99,10 @@ Page {
 
         Text {
             id: errorText
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
+            anchors.centerIn: parent
+            x: Theme.paddingSmall
+            width: parent.width - 2*x
+            font.pixelSize: Theme.fontSizeMedium
             color: Theme.secondaryHighlightColor
             wrapMode: Text.WordWrap
         }
