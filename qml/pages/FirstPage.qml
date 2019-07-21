@@ -134,6 +134,10 @@ Page {
                 text: "Telefonliste"
                 onClicked: pageStack.push(Qt.resolvedUrl("ContactsPage.qml"))
             }
+            MenuItem {
+                text: "Statistik"
+                onClicked: pageStack.push(Qt.resolvedUrl("StatPage.qml"))
+            }
         }
 
         PageHeader {
@@ -282,29 +286,31 @@ Page {
                     id: persView
                     visible: persList.count > 0
                     width: parent.width
-                    height: Theme.itemSizeMedium * (persList.count + 2)
+                    height: contentHeight //Theme.itemSizeMedium * persList.count + 2*(Theme.itemSizeMedium - Theme.paddingMedium)
+                    clip: true
 
                     model: persList
 
                     delegate: ListItem {
                         id: listItem
                         width: persColumn.width
-                        height: Theme.itemSizeMedium
+                        contentHeight: persItem.height + persDesc.height + Theme.paddingMedium
 
                         Text {
                             id: persItem
                             width: parent.width
                             font.pixelSize: Theme.fontSizeMedium
                             color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.Wrap
 
-                            text: date+': '+type
+                            text: (date === '' ? '':date+': ') +type
                         }
                         Text {
+                            id: persDesc
                             anchors.top:  persItem.bottom
                             width: parent.width
                             color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.Wrap
 
                             text: desc
                         }
@@ -331,7 +337,7 @@ Page {
                             y: Theme.paddingMedium
                             color: Theme.highlightColor
                             font.pixelSize: Theme.fontSizeLarge
-                            text: section == "offen" ? "Offene San Dienste":"Deine nächsten Termine"
+                            text: section == "offen" ? "Offene San Dienste": section == "voll" ? "Besetzte San Dienste":"Deine nächsten Termine"
                         }
                     }
                 }

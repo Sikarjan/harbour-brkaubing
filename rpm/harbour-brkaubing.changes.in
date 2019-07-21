@@ -5,6 +5,20 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Sun Jul 21 2019 FloR707 <admin@brk-aubing.de> 1.1.0-1
+- Added closed services to first page
+- Corrected formatting of service notes
+- Added Statistics page
+- Changed notification behaviour when new dates are available
+
+* Wed May 30 2018 FloR707 <admin@brk-aubing.de> 1.0.2-1
+- Fixed bugs in service list view
+
+* Mon Apr 23 2018 FloR707 <admin@brk-aubing.de> 1.0.1-1
+- Item heights in ListViews optimised
+- Missing mobile number added
+- Links added in about page
+
 * Sat Apr 07 2018 FloR707 <admin@brk-aubing.de> 1.0.0-1
 - Contact lists members added
 - Option for members to enrol for a service

@@ -31,6 +31,7 @@ Page {
         }else{
             helferName = data.Nachname+', '+data.Vorname
             Parser.readHidList(data)
+            console.log(hidList.count)
         }
     }
 
@@ -45,7 +46,7 @@ Page {
             id: content
             x: Theme.paddingSmall
             width: parent.width - x*2
-            height: Theme.itemSizeSmall * hidList.count
+            height: Theme.itemSizeMedium * hidList.count
             spacing: Theme.paddingSmall
 
             header: PageHeader {

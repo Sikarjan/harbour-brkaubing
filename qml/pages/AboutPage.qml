@@ -22,7 +22,10 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 width: column.width
                 color: Theme.highlightColor
-                text: "Version 1.0.0\nKontakt: Admin@brk-aubing.de"
+                linkColor: Theme.primaryColor
+                textFormat: Text.RichText
+                text: "<html><style>a {color:"+ Theme.primaryColor +";}</style>Version 1.1.0<br>"+qsTr("Contact")+": <a href=\"mailto:Admin@brk-aubing.de\">Admin@brk-aubing.de</a><br>Homepage: <a href=\"https://brk-aubing.de\">brk-aubing.de</a></html>"
+                onLinkActivated: Qt.openUrlExternally(link);
             }
 
             Text {

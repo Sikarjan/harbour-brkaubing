@@ -59,7 +59,7 @@ Page {
         id: canvas
         anchors.fill: parent
 
-        contentHeight: helferList.count === 0 ? page.height:header.height+content.height
+        contentHeight: helferList.count === 0 ? page.height:header.height+content.height+helferView.height
         VerticalScrollDecorator { flickable: canvas }
 
         PageHeader {
@@ -98,6 +98,7 @@ Page {
                 width: parent.width
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeMedium
+                textFormat: Text.RichText
                 wrapMode: Text.WordWrap
             }
 
@@ -124,6 +125,7 @@ Page {
             delegate: ListItem {
                 id: helferItem
                 width: canvas.width
+                contentHeight: nameItem.height + posItem.height + (comItem.text == '' ? 0:comItem.contentHeight)
 
                 menu: Component {
                     ContextMenu {
@@ -159,17 +161,18 @@ Page {
                     anchors.top:  nameItem.bottom
                     anchors.left: nameItem.left
                     font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.secondaryHighlightColor
+                    color: helferView.highlighted ? Theme.highlightColor : Theme.secondaryColor
 
                     text: pos+' | Anwesend: '+start+' - '+ende
                 }
                 Text {
+                    id: comItem
                     anchors.top:  posItem.bottom
                     anchors.left: posItem.left
                     font.pixelSize: Theme.fontSizeSmall
                     width: nameItem.width
                     color: Theme.secondaryHighlightColor
-//                        wrapMode: Text.WordWrap
+                    wrapMode: Text.WordWrap
 
                     text: anmerkung
                 }

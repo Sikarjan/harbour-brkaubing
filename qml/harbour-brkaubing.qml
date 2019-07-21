@@ -51,12 +51,11 @@ ApplicationWindow{
 
     Notification {
         id: updateNote
-        summary: "Datei wurde aktualisiert"
-        body: "Eine neue Ausbildungsdatei wurde eben heruntergeladen. Neue Termine sind verfügbar."
+        category: "x-nemo.example"
         previewSummary: "Datei wurde aktualisiert"
         previewBody: "Eine neue Ausbildungsdatei wurde eben heruntergeladen. Neue Termine sind verfügbar."
 
-        onClicked: pageStack.push(Qt.resolvedUrl("PlanPage.qml"))
+        onClicked: {console.log('clicked');pageStack.push(Qt.resolvedUrl("PlanPage.qml"))}
     }
 
     XmlFileHandler {
@@ -129,5 +128,8 @@ Thema: "+handler.nextEventsArray[handler.offset+2]
     }
     ListModel {
         id: hidList
+    }
+    ListModel {
+        id: statList
     }
 }
