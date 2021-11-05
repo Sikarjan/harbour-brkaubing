@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import QtQuick.XmlListModel 2.0
 import Sailfish.Silica 1.0
-// import org.nemomobile.calendar 1.0 currently not supportet by Sailfish OS
+
+import harbour.brkaubing 1.0
 
 Page {
     id: root
@@ -53,6 +54,10 @@ Page {
                 //console.log("Terminplan: Unklarer Zustand der XML Datei: " + status)
             }
         }
+    }
+
+    TempFile {
+        id: tempfile
     }
 
     BusyIndicator {
@@ -125,7 +130,7 @@ Page {
             id: dateItem
             menu: contextMenu
             contentHeight: Theme.itemSizeLarge+(model.anmerkung !== "false" ? labelAnmerkung.height:0)+10
-            visible: isVisible(model.type)
+//            visible: isVisible(model.type)
             x: Theme.paddingMedium
 /* Funktion funktioniert nicht!
             function isVisible(type){
@@ -165,24 +170,30 @@ Page {
                 wrapMode: Text.WordWrap
             }
 
-/*            Component {
+            Component {
                 id: contextMenu
 
                 ContextMenu {
                     MenuItem {
                         text: "Zum Kalender hinzufügen"
                         onClicked: {
-                            console.log('Wird übertragen')
-                            event = Calendar.createNewEvent()
-                            event.setStartTime(new Date(model.datum*1000), CalendarEvent.SpecClockTime);
-                            event.setEndTime(new Date((model.datum+1.5*3600)*1000),CalendarEvent.SpecClockTime);
-                            event.displayLabel = model.art+": "+model.thema;
-                            event.location = "BRK Haus Aubing, Altrostr. 16 München";
-                            event.save();
+                            var end = (Number(model.datum)+1.5*3600)*1000;
+                            var event = [
+                                        'BEGIN:VEVENT',
+                                        'DTSTAMP:'+Qt.formatDateTime(new Date(),"yyyyMMddThhmmss"),
+                                        'DTSTART:'+Qt.formatDateTime(new Date(model.datum*1000),"yyyyMMddThhmmss"),
+                                        'DTEND:'+Qt.formatDateTime(new Date(end),"yyyyMMddThhmmss"),
+                                        'SUMMARY:'+model.thema,
+                                        'DESCRIPTION:'+(model.anmerkung !== "false" ? model.anmerkung:""),
+                                        'LOCATION:BRK Haus Aubing, Altrostr. 16 München',
+                                        'UID:'+model.index+"@brk-aubing.de",
+                                        'END:VEVENT'
+                                    ].join("\r\n");
+                            tempfile.shareCalEvent(event)
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 }

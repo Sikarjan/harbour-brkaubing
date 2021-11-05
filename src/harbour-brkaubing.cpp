@@ -36,6 +36,7 @@
 #include <QtQml>
 
 #include "xmlfilehandler.h"
+#include "tempfile.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,6 +50,7 @@ int main(int argc, char *argv[])
     // To display the view, call "show()" (will show fullscreen on device).
 
     qmlRegisterType<XmlFileHandler, 1>("harbour.brkaubing", 1, 0, "XmlFileHandler");
+    qmlRegisterType<TempFile, 1>("harbour.brkaubing", 1, 0, "TempFile");
 
     return SailfishApp::main(argc, argv);
 }

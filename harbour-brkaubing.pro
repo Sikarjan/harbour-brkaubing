@@ -15,7 +15,8 @@ TARGET = harbour-brkaubing
 CONFIG += sailfishapp
 
 SOURCES += src/harbour-brkaubing.cpp \
-    src/xmlfilehandler.cpp
+    src/xmlfilehandler.cpp \
+    src/tempfile.cpp
 
 OTHER_FILES += qml/harbour-brkaubing.qml \
     qml/cover/CoverPage.qml \
@@ -41,7 +42,8 @@ TRANSLATIONS += translations/harbour-brkaubing-de.ts
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 HEADERS += \
-    src/xmlfilehandler.h
+    src/xmlfilehandler.h \
+    src/tempfile.h
 
 DISTFILES += \
     qml/pages/AboutPage.qml \

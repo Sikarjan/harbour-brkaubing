@@ -55,7 +55,7 @@ ApplicationWindow{
         previewSummary: "Datei wurde aktualisiert"
         previewBody: "Eine neue Ausbildungsdatei wurde eben heruntergeladen. Neue Termine sind verfügbar."
 
-        onClicked: {console.log('clicked');pageStack.push(Qt.resolvedUrl("PlanPage.qml"))}
+        onClicked: {pageStack.push(Qt.resolvedUrl("PlanPage.qml"))}
     }
 
     XmlFileHandler {

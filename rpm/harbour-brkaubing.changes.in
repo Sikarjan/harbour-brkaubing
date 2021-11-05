@@ -5,6 +5,17 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Fri Nov 05 2021 FloR707 <admin@brk-aubing.de> 1.3.1-1
+-
+
+* Sat Oct 02 2021 FloR707 <admin@brk-aubing.de> 1.3.0-1
+- Added function to add date to calendar
+- Added support for HvO, when logged in
+
+* Sun Aug 15 2021 FloR707 <admin@brk-aubing.de> 1.2.0-1
+- Moved to new API and new URL
+- 64bit support
+
 * Sun Jul 21 2019 FloR707 <admin@brk-aubing.de> 1.1.0-1
 - Added closed services to first page
 - Corrected formatting of service notes

@@ -16,17 +16,17 @@ Page {
     }
 
     onResponseChanged: {
+        loader.running = false
         if(response == ''){
             errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
             return 0
         }
-
+//console.log(response)
         var resp = JSON.parse(response);
         var data = ''
 
-        if(resp.status === "sandienst"){
+        if(resp.status === "okay"){
             data = resp.data
-            loader.running = false
             heading.text = data[0].dienst
             place.text = "Ort: "+data[0].ort
             time.text = 'Zeit: '+ Qt.formatDateTime(new Date(data[0].datum*1000),"dd.MM.yyyy - hh:mm" ) + ' bis ' + Qt.formatDateTime(new Date(data[0].ende*1000),"hh:mm" )
@@ -34,6 +34,7 @@ Page {
 
             Parser.readHelferList(data)
         }else if(resp.status === "eintragen"){
+    console.log(JSON.stringify(resp))
             if(typeof resp.err === 'undefined'){
                 data = resp.data
                 notification.summary = "Erfolgreich eingetragen"
@@ -47,6 +48,8 @@ Page {
             notification.previewSummary = notification.summary
             notification.previewBody = notification.body
             notification.publish()
+        }else{
+            errorText.text = resp.err;
         }
     }
 
@@ -69,6 +72,7 @@ Page {
 
         Column {
             id: content
+            visible: helferList.count > 0
             x: Theme.horizontalPageMargin
             width: parent.width - x*2
             spacing: Theme.paddingLarge
@@ -109,9 +113,8 @@ Page {
 
                 text: "Helfer:"
             }
-
-
         }
+
         SilicaListView {
             id: helferView
             anchors.top: content.bottom
@@ -131,7 +134,7 @@ Page {
                     ContextMenu {
                         MenuItem {
                             text: "Eintragen"
-                            visible: typeID == -1 && helfer < 1
+                            visible: helfer < 1
                             onClicked: eintragen()
                         }
                     }
@@ -190,7 +193,7 @@ Page {
             id: loader
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: header.bottom;
-            running: errorText === '';
+            running: true;
             size: BusyIndicatorSize.Large
             visible: loader.running
         }
@@ -198,9 +201,7 @@ Page {
         Text {
             id: errorText
             anchors.centerIn: parent
-            anchors.top: header.bottom;
-            x: Theme.paddingSmall
-            width: parent.width - 2*x
+            width: parent.width - 2*Theme.paddingMedium
             color: Theme.primaryColor
             font.pixelSize: Theme.fontSizeLarge
             wrapMode: Text.WordWrap

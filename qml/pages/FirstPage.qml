@@ -72,7 +72,7 @@ Page {
             firstName = data.name
             hash = data.hash
             loggedIn = true
-            console.log("Erfolgreich eingeloggt")
+//            console.log("Erfolgreich eingeloggt")
 
             persLoader.running = true
             persErrorText.text = ""
@@ -95,7 +95,6 @@ Page {
         response = ''
     }
 
-    // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         id: canvas
         anchors.fill: parent
@@ -215,6 +214,7 @@ Page {
                             visible: handler.fileStat > 0
                             width: parent.width
                             color: Theme.secondaryHighlightColor
+                            font.pixelSize: Theme.fontSizeMedium
                             wrapMode: Text.WordWrap
 
                             text: handler.baItem
@@ -239,6 +239,7 @@ Page {
                         Text {
                             width: parent.width
                             color: Theme.secondaryHighlightColor
+                            font.pixelSize: Theme.fontSizeMedium
                             wrapMode: Text.WordWrap
 
                             text: handler.hvoItem
@@ -294,7 +295,7 @@ Page {
                     delegate: ListItem {
                         id: listItem
                         width: persColumn.width
-                        contentHeight: persItem.height + persDesc.height + Theme.paddingMedium
+                        contentHeight: persItem.height + (typeId !== 2 ? persDesc.height:0) + Theme.paddingMedium
 
                         Text {
                             id: persItem
@@ -309,6 +310,7 @@ Page {
                             id: persDesc
                             anchors.top:  persItem.bottom
                             width: parent.width
+                            font.pixelSize: Theme.fontSizeSmall
                             color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
                             wrapMode: Text.Wrap
 
@@ -316,6 +318,7 @@ Page {
                         }
 
                         onClicked: {
+                            console.log('typ: '+typeId)
                             dienstID = refId
                             typeID = typeId
                             pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
@@ -337,7 +340,9 @@ Page {
                             y: Theme.paddingMedium
                             color: Theme.highlightColor
                             font.pixelSize: Theme.fontSizeLarge
-                            text: section == "offen" ? "Offene San Dienste": section == "voll" ? "Besetzte San Dienste":"Deine nächsten Termine"
+                            text: sec[section]
+
+                            property var sec : {'offen':'Offene San Dienste', 'voll':'Besetzte San Dienste', 'z_HvO':'Offene HvO Dienste', 'eigen':'Deine nächsten Termine' }
                         }
                     }
                 }
@@ -377,7 +382,7 @@ Page {
                 id: ehColumn
                 visible: firstAidHandler.show
                 width: parent.width
-                height: ehContent.height+3*Theme.paddingLarge
+                height: childrenRect.height+Theme.paddingLarge
                 spacing: Theme.paddingLarge
 
                 Column {
@@ -401,7 +406,7 @@ Page {
 
                     // Anzeige der nächsten Kurse wenn alles okay
                     Column {
-                        visible: firstAidHandler.fileStat > 0
+                        visible: firstAidHandler.aubingerEH.length > 10
                         width: parent.width
                         spacing: Theme.paddingSmall
 
@@ -422,7 +427,7 @@ Page {
                         }
                     }
                     Column {
-                        visible: firstAidHandler.fileStat > 0
+                        visible: firstAidHandler.ehItem.length > 20
                         width: parent.width
                         spacing: Theme.paddingSmall
 
@@ -446,12 +451,12 @@ Page {
 
                 // Anderfalls Fehler
                 Text {
-                    visible: handler.fileStat < 0
+                    visible: firstAidHandler.fileStat < 0
                     font.pixelSize: Theme.fontSizeMedium
                     color: Theme.highlightColor
                     width: parent.width
                     wrapMode: Text.WordWrap
-                    text: "Es konnten keine Daten gefunden werden. Bitte versuchen Sie es später nocheinmal."
+                    text: "<b>Erste Hifle Kurse</b><br>Es konnten keine Daten gefunden werden. Bitte versuchen Sie es später nocheinmal."
                 }
 
                 // Sonst zeige Laden

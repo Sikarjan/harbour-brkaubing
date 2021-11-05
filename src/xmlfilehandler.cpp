@@ -10,11 +10,10 @@ XmlFileHandler::XmlFileHandler(QObject *parent) : QObject(parent){
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     headManager = new QNetworkAccessManager(this);
     connect(headManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getHeaders(QNetworkReply*)));
-    connect(this, SIGNAL(fileStatChanged(int)), this, SLOT(catchFileStatChange(int)));
 
     stat = 0;
     timeStamp = QDateTime::currentDateTime();
-    for(int i=0; i<25;i++){
+    for(int i = 0; i<25;i++){
         nextEvents << "";
     }
 }
@@ -24,6 +23,7 @@ void XmlFileHandler::load(const QString &filePath, const QString &fileName){
     url = filePath + fileName;
     xmlInfo = QFileInfo(fileUrl);
     if (xmlInfo.exists()) {
+        setFileStat(1);
         // Check if local file is up to date
 //        qDebug() << "Found file check if up to date";
         headManager->head(QNetworkRequest(url));
@@ -35,20 +35,24 @@ void XmlFileHandler::load(const QString &filePath, const QString &fileName){
             setFileStat(-1); // Error no file to display
         }
     }
+    if(stat > 0){ // Update data to display
+        nextEvent();
+    }
 }
 
 void XmlFileHandler::getHeaders(QNetworkReply *reply){
     if (reply->operation() == QNetworkAccessManager::HeadOperation){
-//        qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
-//        qDebug() << xmlInfo.lastModified().toLocalTime();
+/*        qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
+        qDebug() << xmlInfo.lastModified().toLocalTime();
+        qDebug() << QDateTime::currentDateTimeUtc();*/
         if(xmlInfo.lastModified().toLocalTime()>reply->header(QNetworkRequest::LastModifiedHeader).toDateTime()){
             setFileStat(2); // File is still up to date
+            qDebug() << "finished check";
+            nextEvent();
         }else{
             qDebug() << "Update required";
             manager->get(QNetworkRequest(url));
         }
-    }else{
-        setFileStat(1);
     }
     reply->deleteLater();
 }
@@ -59,7 +63,11 @@ void XmlFileHandler::replyFinished(QNetworkReply *reply){
     if(reply->error())        {
         qDebug() << "ERROR!";
         qDebug() << reply->errorString();
-        newFileStat = 1; // Fall back to existing file
+        if(stat == 1){
+            newFileStat = 1; // Fall back to existing file
+        }else{
+            newFileStat = -1; // Error
+        }
     }else{
         QFile *file = new QFile(fileUrl);
         if(file->open(QIODevice::ReadWrite | QIODevice::Truncate)){
@@ -70,16 +78,16 @@ void XmlFileHandler::replyFinished(QNetworkReply *reply){
             newFileStat = 3; // File was updated
         }else{
             qDebug() << "Error opening file" << file->errorString();
-            newFileStat = 1;
+            if(stat == 1){
+                newFileStat = 1; // Fall back to existing file
+            }else{
+                newFileStat = -1; // Error
+            }
         }
         file->close();
     }
     reply->deleteLater();
     setFileStat(newFileStat);
-}
-
-void XmlFileHandler::catchFileStatChange(int stat){
-//    qDebug() << stat;
 }
 
 QString XmlFileHandler::filePath(){
@@ -91,10 +99,7 @@ int XmlFileHandler::fileStat(){
 void XmlFileHandler::setFileStat(const int curStat){
     if(stat != curStat){
         stat = curStat;
-        if(curStat > 0){
-            nextEvent();
-        }
-        fileStatChanged(stat);
+        emit fileStatChanged(stat);
     }
 }
 
@@ -104,16 +109,11 @@ void XmlFileHandler::clear(){
     xmlInfo = QFileInfo(fileUrl);
 }
 
-void XmlFileHandler::setNextEventsArray(QList<QString>){
-    for(int i=0; i<25;i++){
-        nextEvents << "event";
-    }
-}
-
 void XmlFileHandler::nextEvent(){
     QFile *xmlFile = new QFile(fileUrl);
     if (!xmlFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << xmlFile->errorString();
+        setFileStat(-1);
         return;
     }
     QXmlStreamReader *xml = new QXmlStreamReader(xmlFile);
@@ -130,7 +130,7 @@ void XmlFileHandler::nextEvent(){
             xml->readNext();
 
             if(token == QXmlStreamReader::StartElement && nextEvents.at(index).isEmpty()) {
-                QDateTime eventTime = QDateTime::fromTime_t(xml->readElementText().toInt());
+               QDateTime eventTime = QDateTime::fromTime_t(xml->readElementText().toInt());
                if(xml->name() == "datum" && eventTime > timeStamp) {
                    // Speichere die Timestamps von nächsten internen und externen BA um später entscheiden zu können welcher angezeigt werden soll
                    if(index == 0)
@@ -161,8 +161,14 @@ void XmlFileHandler::nextEvent(){
     }else{
         nextEvents.replace(24,"4");
     }
+
+    // Check if there is any data in neytEvents
+    if(nextEvents.at(12).isEmpty() && nextEvents.at(8).isEmpty() && nextEvents.at(20).isEmpty()){
+        setFileStat(-1);
+    }
+
     //resets its internal state to the initial state.
     xml->clear();
     xmlFile->close();
-    nextEventsArrayChanged();
+    emit nextEventsArrayChanged();
 }
