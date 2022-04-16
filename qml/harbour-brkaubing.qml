@@ -132,4 +132,7 @@ Thema: "+handler.nextEventsArray[handler.offset+2]
     ListModel {
         id: statList
     }
+    ListModel {
+        id: hvoDP
+    }
 }

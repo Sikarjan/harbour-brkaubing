@@ -344,6 +344,11 @@ Page {
 
                             property var sec : {'offen':'Offene San Dienste', 'voll':'Besetzte San Dienste', 'z_HvO':'Offene HvO Dienste', 'eigen':'Deine nächsten Termine' }
                         }
+                        onClicked: {
+                            if(section === 'z_HvO'){
+                                pageStack.push(Qt.resolvedUrl("hvoDP.qml"))
+                            }
+                        }
                     }
                 }
 

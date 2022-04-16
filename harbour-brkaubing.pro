@@ -58,7 +58,8 @@ DISTFILES += \
     qml/js/parser.js \
     qml/js/sha512.js \
     qml/pages/ContactsPage.qml \
-    qml/pages/StatPage.qml
+    qml/pages/StatPage.qml \
+    qml/pages/hvoDP.qml
 
 RESOURCES += \
     res.qrc
