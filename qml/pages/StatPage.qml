@@ -26,7 +26,15 @@ Page {
         if(resp.status === "error"){
             errorText.text = resp.data
         }else{
-            statTable.text = "<style>table {width: "+ parent.width +"; color:"+ Theme.highlightColor +" } td, th {padding: 0 " + Theme.paddingSmall +"}</style>" + resp.data
+            statTable.text = "<html><head><style>
+.mTable {
+    width: "+ page.width +";
+    color:"+ Theme.highlightColor +"
+}
+.mTable td, .mTable th {
+    padding: " + Theme.paddingSmall +";
+}
+</style></head><body>" + resp.data +"</body></html>"
         }
     }
 
@@ -48,6 +56,7 @@ Page {
             textFormat: Text.RichText
             width: parent.width
             height: contentHeight
+            font.pixelSize: Theme.fontSizeMedium
         }
 
 // Neu mit Tabelle!

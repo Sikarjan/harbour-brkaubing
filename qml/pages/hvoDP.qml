@@ -8,10 +8,13 @@ import "../js/parser.js" as Parser
 Page {
     id: page
     property string response
+    property string hash: ''
+    property int sort: 1
 
     Component.onCompleted: {
         Storage.initialize();
-        Parser.post('task=8&hash='+Storage.getSetting("hash"))
+        hash = Storage.getSetting("hash")
+        Parser.post('task=8&hash='+ hash)
         loader.running = true
     }
 
@@ -21,12 +24,13 @@ Page {
             errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
             return 0
         }
-
+//console.log(response)
         var resp = JSON.parse(response);
         var data = ''
 
         if(resp.status === "hvoDP"){
             data = resp.data
+//console.log(JSON.stringify(data, 0, 2));
             Parser.readHvoDP(data)
         }else{
             errorText.text = resp.err;
@@ -44,6 +48,33 @@ Page {
 
         contentHeight: hvoDP.count === 0 ? page.height:header.height+content.height+hvoDPview.height
         VerticalScrollDecorator { flickable: canvas }
+
+        PullDownMenu {
+            MenuItem {
+                text: "Letzter Monat"
+                visible: sort != 3
+                onClicked: {
+                    sort = 3
+                    Parser.post('task=8&hash='+hash+'&&sort=3')
+                }
+            }
+            MenuItem {
+                text: "Kommende"
+                visible: sort != 2
+                onClicked: {
+                    sort = 2
+                    Parser.post('task=8&hash='+hash+'&&sort=2')
+                }
+            }
+            MenuItem {
+                text: "Aktuell"
+                visible: sort != 1
+                onClicked: {
+                    sort = 1
+                    Parser.post('task=8&hash='+hash+'&&sort=1')
+                }
+            }
+        }
 
         PageHeader {
             id: header
@@ -82,26 +113,33 @@ Page {
             delegate: ListItem {
                 id: listItem
                 width: parent.width
-                contentHeight: persItem.height + persDesc.height + Theme.paddingMedium
+                contentHeight: shift.height + shiftNote.height + Theme.paddingSmall
 
                 Text {
-                    id: persItem
+                    id: shift
                     width: parent.width
                     font.pixelSize: Theme.fontSizeMedium
                     color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                     wrapMode: Text.Wrap
 
-                    text: (date === '' ? '':date+': ') +type+'<br>Besetzung: '+belegt+' von 3'
+                    text: (date === '' ? '':date+': ') +type
                 }
                 Text {
-                    id: persDesc
-                    anchors.top:  persItem.bottom
+                    id: shiftNote
+                    anchors.top:  shift.bottom
                     width: parent.width
                     font.pixelSize: Theme.fontSizeSmall
                     color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
                     wrapMode: Text.Wrap
 
-                    text: note
+                    text: helfer+(note ===''? '':'<br>'+note)
+                }
+                Rectangle {
+                    anchors.top: shiftNote.bottom
+                    anchors.topMargin: 2
+                    width: page.width
+                    height: 2
+                    color: Theme.secondaryColor
                 }
 
                 onClicked: {

@@ -24,7 +24,7 @@ Page {
                 color: Theme.highlightColor
                 linkColor: Theme.primaryColor
                 textFormat: Text.RichText
-                text: "<html><style>a {color:"+ Theme.primaryColor +";}</style>Version 1.3.1<br>"+qsTr("Contact")+": <a href=\"mailto:Admin@brk-aubing.de\">Admin@brk-aubing.de</a><br>Homepage: <a href=\"https://brk-aubing.de\">brk-aubing.de</a></html>"
+                text: "<html><style>a {color:"+ Theme.primaryColor +";}</style>Version 1.4.0<br>"+qsTr("Contact")+": <a href=\"mailto:Admin@brk-aubing.de\">Admin@brk-aubing.de</a><br>Homepage: <a href=\"https://brk-aubing.de\">brk-aubing.de</a></html>"
                 onLinkActivated: Qt.openUrlExternally(link);
             }
 

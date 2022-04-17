@@ -57,7 +57,7 @@ CoverBackground {
             horizontalCenter: parent.horizontalCenter
         }
         color: Theme.secondaryColor
-        width: image.width+Theme.paddingLarge*1.5
+        width: parent.width-2*Theme.paddingMedium
         wrapMode: Text.WordWrap
         font.pixelSize: Theme.fontSizeExtraSmall
 

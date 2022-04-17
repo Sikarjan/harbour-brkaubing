@@ -154,7 +154,7 @@ Page {
             Label {
                 id: labelThema
                 text: model.thema
-                font.pixelSize: Theme.fontSizeLarge
+                font.pixelSize: Theme.fontSizeLargeBase
                 color: Theme.primaryColor
                 anchors.top: labelArt.bottom
             }
