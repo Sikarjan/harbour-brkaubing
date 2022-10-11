@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Oct 11 2022 FloR707 <admin@brk-aubing.de> 1.5.0-1
+- Added SailJail
+- Added AED exam list
+- Fixed missing line break in "Ausbildungsplan" for titeles
+
 * Sun Apr 17 2022 FloR707 <admin@brk-aubing.de> 1.4.0-1
 - Added hvoDP page
 - Changed font size on statistic page

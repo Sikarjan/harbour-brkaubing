@@ -8,21 +8,16 @@ Name:       harbour-brkaubing
 # >> macros
 # << macros
 
-%{!?qtc_qmake:%define qtc_qmake %qmake}
-%{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
-%{!?qtc_make:%define qtc_make make}
-%{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    BRK Aubing App
-Version:    1.4.0
+Version:    1.5.0
 Release:    1
-Group:      Qt/Qt
+Group:      Applications/Multimedia
 License:    GNU General Public License v3.0
-URL:        https://brk-aubing.de
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-brkaubing.yaml
-Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   sailfishsilica-qt5
 Requires:   qt5-qtdeclarative-import-xmllistmodel
-BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
+BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -42,9 +37,9 @@ App to access BRK Aubing schedules.
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
+%qmake5 
 
-%qtc_make %{?_smp_mflags}
+make %{?_smp_mflags}
 
 # >> build post
 # << build post
@@ -64,7 +59,7 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
+%{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

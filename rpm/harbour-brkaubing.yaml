@@ -1,11 +1,8 @@
 Name: harbour-brkaubing
 Summary: BRK Aubing App
-Version: 1.4.0
+Version: 1.5.0
 Release: 1
-# The contents of the Group field should be one of the groups listed here:
-# http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
-Group: Qt/Qt
-URL: https://brk-aubing.de
+Group: Applications/Multimedia
 License: GNU General Public License v3.0
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
@@ -13,15 +10,16 @@ Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
   App to access BRK Aubing schedules.
-Configure: none
+#Configure: none
 # The qtc5 builder inserts macros to allow QtCreator to have fine
 # control over qmake/make execution
-Builder: qtc5
+#Builder: qtc5
+Builder: qmake5
 
 # This section specifies build dependencies that are resolved using pkgconfig.
 # This is the preferred way of specifying build dependencies for your package.
 PkgConfigBR:
-  - sailfishapp >= 1.0.2
+  - sailfishapp
   - Qt5Core
   - Qt5Qml
   - Qt5Quick
@@ -32,12 +30,12 @@ PkgConfigBR:
 
 # Runtime dependencies which are not automatically detected
 Requires:
-  - sailfishsilica-qt5 >= 0.10.9 
+  - sailfishsilica-qt5
   - qt5-qtdeclarative-import-xmllistmodel
 
 # All installed files
 Files:
-  - '%{_bindir}'
+  - '%{_bindir}/%{name}'
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'

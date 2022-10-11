@@ -134,6 +134,10 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("ContactsPage.qml"))
             }
             MenuItem {
+                text: "AED Plan"
+                onClicked: pageStack.push(Qt.resolvedUrl("AEDPage.qml"))
+            }
+            MenuItem {
                 text: "Statistik"
                 onClicked: pageStack.push(Qt.resolvedUrl("StatPage.qml"))
             }
@@ -166,6 +170,8 @@ Page {
 
                     Button {
                         id: aplan
+                        border.color: Theme.primaryColor
+                        border.highlightColor: Theme.highlightColor
                         text: ">> Ausbildungsplan"
                         anchors.horizontalCenter: parent.horizontalCenter
                         onClicked: pageStack.push(Qt.resolvedUrl("PlanPage.qml"))

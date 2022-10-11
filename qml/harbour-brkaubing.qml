@@ -135,4 +135,7 @@ Thema: "+handler.nextEventsArray[handler.offset+2]
     ListModel {
         id: hvoDP
     }
+    ListModel {
+        id: aedPlan
+    }
 }
