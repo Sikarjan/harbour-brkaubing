@@ -8,7 +8,9 @@
 * Thu Oct 11 2022 FloR707 <admin@brk-aubing.de> 1.5.0-1
 - Added SailJail
 - Added AED exam list
+- Added option to reload list in AED exam
 - Fixed missing line break in "Ausbildungsplan" for titeles
+- Fixed Task link when no active task
 
 * Sun Apr 17 2022 FloR707 <admin@brk-aubing.de> 1.4.0-1
 - Added hvoDP page

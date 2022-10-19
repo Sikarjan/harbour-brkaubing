@@ -23,13 +23,13 @@ Page {
             errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
             return 0
         }
-console.log(response)
+//console.log(response)
         var resp = JSON.parse(response);
         var data = ''
 
         if(resp.status === "aedPlan"){
             data = resp.data
-console.log(JSON.stringify(data, 0, 2));
+//console.log(JSON.stringify(data, 0, 2));
             Parser.readAedPlan(data)
         }else{
             errorText.text = resp.err;
@@ -47,6 +47,18 @@ console.log(JSON.stringify(data, 0, 2));
 
         contentHeight: aedPlan.count === 0 ? page.height:header.height+content.height+aedPlanview.height
         VerticalScrollDecorator { flickable: canvas }
+
+        PushUpMenu {
+            visible: loggedIn
+            MenuItem {
+                text: "Aktualisieren"
+                onClicked: {
+                    errorText.text = ""
+                    loader.running = true
+                    Parser.post("task=9&hash="+hash)
+                }
+            }
+        }
 
         PageHeader {
             id: header

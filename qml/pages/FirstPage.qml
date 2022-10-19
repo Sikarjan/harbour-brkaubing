@@ -324,10 +324,11 @@ Page {
                         }
 
                         onClicked: {
-                            console.log('typ: '+typeId)
-                            dienstID = refId
-                            typeID = typeId
-                            pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                            if(typeID > 0){
+                                dienstID = refId
+                                typeID = typeId
+                                pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                            }
                         }
                     }
 

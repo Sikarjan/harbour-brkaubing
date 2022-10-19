@@ -145,6 +145,7 @@ Page {
                  function eintragen() {
                      remorseAction("Eintragen abbrechen", function(){
                          Parser.post('task=6&hash='+Storage.getSetting("hash")+'&refId='+dienstID+'&typeId='+typeID+'&role='+pos+'&pos='+(index+1))
+                         nameItem.text = firstName
                      });
                  }
 
