@@ -40,6 +40,13 @@ Page {
 
     property string response
 
+    function update(){
+        persErrorText.text = ""
+        persLoader.running = true
+        persList.clear()
+        Parser.post("task=2&hash="+hash)
+    }
+
     Component.onCompleted: {
         if(!handler.filesChecked){
             handler.load(Vars.mainPath, Vars.trainingSchedule);
@@ -62,6 +69,13 @@ Page {
         }
     }
 
+    onStatusChanged: {
+        if(PageStatus.Active && listUpdated){
+            listUpdated = false;
+            update();
+        }
+    }
+
     onResponseChanged: {
         if(response == '')
             return 0
@@ -74,9 +88,7 @@ Page {
             loggedIn = true
 //            console.log("Erfolgreich eingeloggt")
 
-            persLoader.running = true
-            persErrorText.text = ""
-            Parser.post("task=2&hash="+data.hash)
+            update();
         }else if(data.status === "pers"){
             persLoader.running = false
             Parser.readPersList(data.data)
@@ -123,10 +135,7 @@ Page {
             MenuItem {
                 text: "Aktualisieren"
                 onClicked: {
-                    persErrorText.text = ""
-                    persLoader.running = true
-                    persList.clear()
-                    Parser.post("task=2&hash="+hash)
+                    page.update();
                 }
             }
             MenuItem {
