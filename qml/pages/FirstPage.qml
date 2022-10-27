@@ -333,7 +333,7 @@ Page {
                         }
 
                         onClicked: {
-                            if(typeID > 0){
+                            if(typeId > 0){
                                 dienstID = refId
                                 typeID = typeId
                                 pageStack.push(Qt.resolvedUrl("DienstPage.qml"))

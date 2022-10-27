@@ -7,6 +7,6 @@ Name=BRK Aubing
 Name[de]=BRK Aubing
 
 [X-Sailjail]
-Permissions=Documents;Downloads;Internet;Synchronization
+Permissions=Internet;UserDirs
 OrganizationName=de.brk-aubing
 ApplicationName=harbour-brkaubing

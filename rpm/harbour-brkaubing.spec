@@ -10,7 +10,7 @@ Name:       harbour-brkaubing
 
 Summary:    BRK Aubing App
 Version:    1.5.0
-Release:    1
+Release:    2
 Group:      Applications/Multimedia
 License:    GNU General Public License v3.0
 Source0:    %{name}-%{version}.tar.bz2

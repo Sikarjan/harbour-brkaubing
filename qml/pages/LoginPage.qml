@@ -51,6 +51,12 @@ Page {
         response = ''
     }
 
+    function logIn(){
+        var pass = SHA.hex_sha512(password.text)
+        Parser.post('task=1&user='+login.text+'&password='+pass)
+        loginLoader.running = true
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -81,19 +87,17 @@ Page {
                 width: parent.width
                 label: "Passwort"
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: loginButton.pressed
+                EnterKey.onClicked: logIn()
             }
 
             Button {
                 id: loginButton
+                border.color: Theme.primaryColor
+                border.highlightColor: Theme.highlightColor
                 width: parent.width/3*2
                 anchors.horizontalCenter: loginView.horizontalCenter
                 text: "Login"
-                onClicked: {
-                    var pass = SHA.hex_sha512(password.text)
-                    Parser.post('task=1&user='+login.text+'&password='+pass)
-                    loginLoader.running = true
-                }
+                onClicked: logIn()
             }
 
             BusyIndicator {
