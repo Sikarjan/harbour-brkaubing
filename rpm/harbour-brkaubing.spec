@@ -9,8 +9,8 @@ Name:       harbour-brkaubing
 # << macros
 
 Summary:    BRK Aubing App
-Version:    1.5.0
-Release:    2
+Version:    1.5.2
+Release:    1
 Group:      Applications/Multimedia
 License:    GNU General Public License v3.0
 Source0:    %{name}-%{version}.tar.bz2

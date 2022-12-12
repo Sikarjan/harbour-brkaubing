@@ -51,6 +51,7 @@ Page {
             notification.publish()
         }else{
             errorText.text = resp.err;
+            helferList.clear();
         }
     }
 

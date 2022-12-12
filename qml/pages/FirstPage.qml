@@ -333,10 +333,12 @@ Page {
                         }
 
                         onClicked: {
-                            if(typeId > 0){
+                            if(typeId !== 0){
                                 dienstID = refId
                                 typeID = typeId
                                 pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                            }else{
+                                console.log("Typ "+typeId)
                             }
                         }
                     }
@@ -361,6 +363,7 @@ Page {
                             property var sec : {'offen':'Offene San Dienste', 'voll':'Besetzte San Dienste', 'z_HvO':'Offene HvO Dienste', 'eigen':'Deine nächsten Termine' }
                         }
                         onClicked: {
+                            console.log('click')
                             if(section === 'z_HvO'){
                                 pageStack.push(Qt.resolvedUrl("hvoDP.qml"))
                             }
