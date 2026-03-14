@@ -20,8 +20,15 @@ Page {
             return 0
         }
 
-        var resp = JSON.parse(response);
         loader.running = false
+
+        try{
+            var resp = JSON.parse(response);
+        } catch(e) {
+            persLoader.running = false
+            errorText.text = 'Es konnten keine Daten abgerufen werden.'
+            return 0
+        }
 
         if(resp.status === "error"){
             errorText.text = resp.data

@@ -13,7 +13,7 @@ Name:       harbour-brkaubing
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    BRK Aubing App
-Version:    1.4.0
+Version:    1.4.1
 Release:    1
 Group:      Qt/Qt
 License:    GNU General Public License v3.0

@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Wed Mar 11 2026 FloR707 <admin@brk-aubing.de> 1.4.1-1
+- Improved Error Messages.
+- Updated to latest SDK
+- Added permissions
+
 * Sun Apr 17 2022 FloR707 <admin@brk-aubing.de> 1.4.0-1
 - Added hvoDP page
 - Changed font size on statistic page

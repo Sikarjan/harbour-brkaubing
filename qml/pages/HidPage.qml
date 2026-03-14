@@ -11,18 +11,29 @@ Page {
 
     Component.onCompleted: {
         Storage.initialize();
-        Parser.post('task=4&hash='+Storage.getSetting("hash")+'&hid='+hid)
+        Parser.post('task=4&hid='+hid+'&hash='+Storage.getSetting("hash"))
         loader.running = true
     }
 
     onResponseChanged: {
         if(response == ''){
             errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
+            loader.running = false
             return 0
         }
 
-        var resp = JSON.parse(response);
-        var data = resp.data
+        try {
+            var resp = JSON.parse(response);
+            var data = resp.data
+        } catch(error){
+            errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
+            loader.running = false
+            return 0
+        }
+
+        if(data.status === 'error'){
+            errorText.text = data.err
+        }
 
         loader.running = false
 
@@ -92,15 +103,15 @@ Page {
         // Lade Anzeige
         BusyIndicator {
             id: loader
-            anchors.horizontalCenter: parent.horizontalCenter
-            running: errorText === '';
+            anchors.centerIn: parent
+            running: false
             size: BusyIndicatorSize.Large
             visible: loader.running
         }
 
         Text {
             id: errorText
-            anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
             x: Theme.paddingSmall
             width: parent.width - 2*x
             font.pixelSize: Theme.fontSizeMedium

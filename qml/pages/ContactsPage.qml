@@ -20,8 +20,14 @@ Page {
             return 0
         }
 
-        var resp = JSON.parse(response);
-        var data = resp.data
+        try{
+            var resp = JSON.parse(response);
+            var data = resp.data
+        } catch(e) {
+            loader.running = false
+            errorText.text = 'Es konnten keine Daten abgerufen werden.'
+            return 0
+        }
 
         loader.running = false
 
@@ -35,8 +41,7 @@ Page {
     SilicaFlickable {
         id: canvas
         anchors.fill: parent
-
-        contentHeight: content.height
+        contentHeight: contactsList.count === 0 ? parent.height:content.height
         VerticalScrollDecorator { flickable: canvas }
 
         SilicaListView {
@@ -106,6 +111,7 @@ Page {
         BusyIndicator {
             id: loader
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             running: errorText === '';
             size: BusyIndicatorSize.Large
             visible: loader.running
@@ -113,7 +119,7 @@ Page {
 
         Text {
             id: errorText
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
             color: Theme.primaryColor

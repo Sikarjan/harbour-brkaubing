@@ -66,7 +66,13 @@ Page {
         if(response == '')
             return 0
 
-        var data = JSON.parse(response);
+        try{
+            var data = JSON.parse(response);
+        } catch(e) {
+            persLoader.running = false
+            persErrorText.text = 'Es konnten keine Daten abgerufen werden.'
+            return 0
+        }
 
         if(data.status === "login"){
             firstName = data.name

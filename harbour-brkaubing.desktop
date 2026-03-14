@@ -11,3 +11,7 @@ Name=BRK Aubing
 # a different app name in German locale (de).
 Name[de]=BRK Aubing
 
+[X-Sailjail]
+Permissions=Internet
+OrganizationName=de.brk-aubing
+ApplicationName=BRK Aubing
