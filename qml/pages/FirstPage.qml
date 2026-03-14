@@ -40,6 +40,13 @@ Page {
 
     property string response
 
+    function update(){
+        persErrorText.text = ""
+        persLoader.running = true
+        persList.clear()
+        Parser.post("task=2&hash="+hash)
+    }
+
     Component.onCompleted: {
         if(!handler.filesChecked){
             handler.load(Vars.mainPath, Vars.trainingSchedule);
@@ -62,6 +69,13 @@ Page {
         }
     }
 
+    onStatusChanged: {
+        if(PageStatus.Active && listUpdated){
+            listUpdated = false;
+            update();
+        }
+    }
+
     onResponseChanged: {
         if(response == '')
             return 0
@@ -80,9 +94,7 @@ Page {
             loggedIn = true
 //            console.log("Erfolgreich eingeloggt")
 
-            persLoader.running = true
-            persErrorText.text = ""
-            Parser.post("task=2&hash="+data.hash)
+            update();
         }else if(data.status === "pers"){
             persLoader.running = false
             Parser.readPersList(data.data)
@@ -129,15 +141,16 @@ Page {
             MenuItem {
                 text: "Aktualisieren"
                 onClicked: {
-                    persErrorText.text = ""
-                    persLoader.running = true
-                    persList.clear()
-                    Parser.post("task=2&hash="+hash)
+                    page.update();
                 }
             }
             MenuItem {
                 text: "Telefonliste"
                 onClicked: pageStack.push(Qt.resolvedUrl("ContactsPage.qml"))
+            }
+            MenuItem {
+                text: "AED Plan"
+                onClicked: pageStack.push(Qt.resolvedUrl("AEDPage.qml"))
             }
             MenuItem {
                 text: "Statistik"
@@ -172,6 +185,8 @@ Page {
 
                     Button {
                         id: aplan
+                        border.color: Theme.primaryColor
+                        border.highlightColor: Theme.highlightColor
                         text: ">> Ausbildungsplan"
                         anchors.horizontalCenter: parent.horizontalCenter
                         onClicked: pageStack.push(Qt.resolvedUrl("PlanPage.qml"))
@@ -324,10 +339,13 @@ Page {
                         }
 
                         onClicked: {
-                            console.log('typ: '+typeId)
-                            dienstID = refId
-                            typeID = typeId
-                            pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                            if(typeId !== 0){
+                                dienstID = refId
+                                typeID = typeId
+                                pageStack.push(Qt.resolvedUrl("DienstPage.qml"))
+                            }else{
+                                console.log("Typ "+typeId)
+                            }
                         }
                     }
 
@@ -351,6 +369,7 @@ Page {
                             property var sec : {'offen':'Offene San Dienste', 'voll':'Besetzte San Dienste', 'z_HvO':'Offene HvO Dienste', 'eigen':'Deine nächsten Termine' }
                         }
                         onClicked: {
+                            console.log('click')
                             if(section === 'z_HvO'){
                                 pageStack.push(Qt.resolvedUrl("hvoDP.qml"))
                             }

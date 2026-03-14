@@ -21,7 +21,7 @@ Page {
             errorText.text = 'Beim Laden der Daten ist ein Fehler aufgetreten.'
             return 0
         }
-//console.log(response)
+// console.log(response)
         var resp = JSON.parse(response);
         var data = ''
 
@@ -34,13 +34,14 @@ Page {
 
             Parser.readHelferList(data)
         }else if(resp.status === "eintragen"){
-    console.log(JSON.stringify(resp))
+// console.log(JSON.stringify(resp))
             if(typeof resp.err === 'undefined'){
                 data = resp.data
                 notification.summary = "Erfolgreich eingetragen"
                 notification.body = data.msg
 
                 helferList.set(data.pos, {"helfer": hid, "name": firstName})
+                listUpdated = true
             }else{
                 notification.summary = "Fehler beim Eintragen"
                 notification.body = resp.err
@@ -50,6 +51,7 @@ Page {
             notification.publish()
         }else{
             errorText.text = resp.err;
+            helferList.clear();
         }
     }
 

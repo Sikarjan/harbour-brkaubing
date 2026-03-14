@@ -18,6 +18,8 @@ SOURCES += src/harbour-brkaubing.cpp \
     src/xmlfilehandler.cpp \
     src/tempfile.cpp
 
+desktop.files = harbour-brkaubing.desktop
+
 OTHER_FILES += qml/harbour-brkaubing.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
@@ -33,10 +35,6 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 
-# German translation is enabled as an example. If you aren't
-# planning to localize your app, remember to comment out the
-# following TRANSLATIONS line. And also do not forget to
-# modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-brkaubing-de.ts
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
@@ -46,6 +44,7 @@ HEADERS += \
     src/tempfile.h
 
 DISTFILES += \
+    qml/pages/AEDPage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/DienstPage.qml \
     qml/pages/PlanPage.qml \

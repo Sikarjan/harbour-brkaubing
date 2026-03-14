@@ -18,6 +18,12 @@ Page {
         loader.running = true
     }
 
+    onStatusChanged: {
+        if(PageStatus.Active && listUpdated){
+            Parser.post('task=8&hash='+ hash)
+        }
+    }
+
     onResponseChanged: {
         loader.running = false
         if(response == ''){

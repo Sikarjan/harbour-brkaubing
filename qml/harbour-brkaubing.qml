@@ -48,6 +48,7 @@ ApplicationWindow{
     property bool loggedIn: false;
     property int dienstID: 0;
     property int typeID: 0;
+    property bool listUpdated: false;
 
     Notification {
         id: updateNote
@@ -134,5 +135,8 @@ Thema: "+handler.nextEventsArray[handler.offset+2]
     }
     ListModel {
         id: hvoDP
+    }
+    ListModel {
+        id: aedPlan
     }
 }

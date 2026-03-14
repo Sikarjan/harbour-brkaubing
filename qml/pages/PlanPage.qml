@@ -129,7 +129,7 @@ Page {
         delegate: ListItem {
             id: dateItem
             menu: contextMenu
-            contentHeight: Theme.itemSizeLarge+(model.anmerkung !== "false" ? labelAnmerkung.height:0)+10
+            contentHeight: labelArt.height + labelThema.height + (model.anmerkung !== "false" ? labelAnmerkung.height:0) +15
 //            visible: isVisible(model.type)
             x: Theme.paddingMedium
 /* Funktion funktioniert nicht!
@@ -151,12 +151,14 @@ Page {
                 font.bold: false
                 color: Theme.secondaryColor
             }
-            Label {
+            Text {
                 id: labelThema
                 text: model.thema
                 font.pixelSize: Theme.fontSizeLargeBase
                 color: Theme.primaryColor
                 anchors.top: labelArt.bottom
+                width: root.width - 2*Theme.paddingLarge
+                wrapMode: Text.WordWrap
             }
             Text {
                 id: labelAnmerkung
